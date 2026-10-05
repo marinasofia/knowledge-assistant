@@ -1,0 +1,74 @@
+name: Verify
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: knowledge
+          POSTGRES_USER: knowledge_owner
+          POSTGRES_PASSWORD: local-owner-only
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U knowledge_owner -d knowledge"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: '0.12.3'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Locked backend install
+        working-directory: backend
+        run: uv sync --frozen
+      - name: Migration and backend checks
+        working-directory: backend
+        run: |
+          uv run alembic upgrade head
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run pytest -q
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+          npm run format:check
+          npm audit --audit-level=high
+      - name: Dependency audit
+        working-directory: backend
+        run: uv run pip-audit
+      - name: Repository hygiene
+        run: python scripts/check_repository.py
+      - name: Browser workflow checks
+        env:
+          KA_DEV_AUTH: 'true'
+          # The browser suite signs in many times from one address within a minute.
+          KA_AUTH_RATE_PER_MINUTE: '1000'
+        run: |
+          cd backend
+          .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/knowledge-api.log 2>&1 &
+          api_pid=$!
+          .venv/bin/python -m app.worker > /tmp/knowledge-worker.log 2>&1 &
+          worker_pid=$!
+          cd ../frontend
+          node node_modules/vite/bin/vite.js --host 127.0.0.1 > /tmp/knowledge-ui.log 2>&1 &
+          ui_pid=$!
+          trap 'kill "$api_pid" "$worker_pid" "$ui_pid" 2>/dev/null || true; wait || true' EXIT
+          npx playwright install --with-deps chromium
+          npm test

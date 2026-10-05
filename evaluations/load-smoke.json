@@ -1,0 +1,13 @@
+{
+  "mode": "local_evidence",
+  "transport": "in-process ASGI with real PostgreSQL",
+  "hardware_arch": "arm64",
+  "os": "Darwin",
+  "concurrency": 5,
+  "corpus_documents": 6,
+  "requests": 20,
+  "errors": 0,
+  "p50_ms": 63.585,
+  "p95_ms": 117.33,
+  "limitations": "Small local smoke test, excludes network and live provider latency."
+}

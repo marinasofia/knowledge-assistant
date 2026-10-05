@@ -1,0 +1,1142 @@
+{
+  "split": "development",
+  "label_status": "draft_requires_human_review",
+  "corpus_documents": 6,
+  "human_claim_support": "not_measured",
+  "live_generation": "not_measured",
+  "outcome_rule": "local evidence mode, top passage coverage >= 0.4",
+  "modes": {
+    "keyword": {
+      "case_count": 40,
+      "labeled_cases": 28,
+      "recall_at_5": 0.9643,
+      "mrr": 0.9196,
+      "ndcg_at_5": 0.9075,
+      "outcomes": {
+        "answerable": {
+          "matched": 17,
+          "cases": 17
+        },
+        "multi-document": {
+          "matched": 5,
+          "cases": 7
+        },
+        "unanswerable": {
+          "matched": 6,
+          "cases": 6
+        },
+        "conflicting": {
+          "matched": 3,
+          "cases": 4
+        },
+        "injection": {
+          "matched": 6,
+          "cases": 6
+        }
+      },
+      "abstention_curve": [
+        {
+          "threshold": 0.0,
+          "coverage": 1.0,
+          "risk": 0.3,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.05,
+          "coverage": 0.925,
+          "risk": 0.243,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.925,
+          "risk": 0.243,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.15,
+          "coverage": 0.875,
+          "risk": 0.2,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.825,
+          "risk": 0.152,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.25,
+          "coverage": 0.825,
+          "risk": 0.152,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.8,
+          "risk": 0.125,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.35,
+          "coverage": 0.65,
+          "risk": 0.0,
+          "wrong_abstention": 0.071
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.65,
+          "risk": 0.0,
+          "wrong_abstention": 0.071
+        },
+        {
+          "threshold": 0.45,
+          "coverage": 0.575,
+          "risk": 0.0,
+          "wrong_abstention": 0.179
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.575,
+          "risk": 0.0,
+          "wrong_abstention": 0.179
+        },
+        {
+          "threshold": 0.55,
+          "coverage": 0.45,
+          "risk": 0.0,
+          "wrong_abstention": 0.357
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 0.45,
+          "risk": 0.0,
+          "wrong_abstention": 0.357
+        },
+        {
+          "threshold": 0.65,
+          "coverage": 0.425,
+          "risk": 0.0,
+          "wrong_abstention": 0.393
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.275,
+          "risk": 0.0,
+          "wrong_abstention": 0.607
+        },
+        {
+          "threshold": 0.75,
+          "coverage": 0.275,
+          "risk": 0.0,
+          "wrong_abstention": 0.607
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.275,
+          "risk": 0.0,
+          "wrong_abstention": 0.607
+        },
+        {
+          "threshold": 0.85,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        }
+      ],
+      "details": [
+        {
+          "id": "ka-001",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 3,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-002",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 2,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-004",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-005",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 0.25,
+          "ndcg": 0.4307
+        },
+        {
+          "id": "ka-007",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-008",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-010",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "ndcg": 0.6309
+        },
+        {
+          "id": "ka-011",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.8,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-013",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-014",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.8,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-016",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 1,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-017",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 1,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-019",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 3,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-020",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-022",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-023",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 1,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-025",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 2,
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "ndcg": 0.6309
+        },
+        {
+          "id": "ka-026",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 0.5,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.6131
+        },
+        {
+          "id": "ka-028",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 3,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-029",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.4,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.8772
+        },
+        {
+          "id": "ka-031",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.9197
+        },
+        {
+          "id": "ka-032",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.4,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-034",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 3,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-035",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.4,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.9197
+        },
+        {
+          "id": "ka-037",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.25,
+          "retrieved": 3
+        },
+        {
+          "id": "ka-038",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.0,
+          "retrieved": 0
+        },
+        {
+          "id": "ka-040",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 1
+        },
+        {
+          "id": "ka-041",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 2
+        },
+        {
+          "id": "ka-043",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.0,
+          "retrieved": 0
+        },
+        {
+          "id": "ka-044",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-046",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "conflict",
+          "top_coverage": 0.667,
+          "retrieved": 3,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-047",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "conflict",
+          "top_coverage": 1.0,
+          "retrieved": 4,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-049",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "conflict",
+          "top_coverage": 0.6,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-050",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "answer",
+          "top_coverage": 0.8,
+          "retrieved": 5,
+          "recall": 0.5,
+          "reciprocal_rank": 0.5,
+          "ndcg": 0.3869
+        },
+        {
+          "id": "ka-052",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-053",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.143,
+          "retrieved": 3
+        },
+        {
+          "id": "ka-055",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.167,
+          "retrieved": 2
+        },
+        {
+          "id": "ka-056",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.167,
+          "retrieved": 2
+        },
+        {
+          "id": "ka-058",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.125,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-059",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.0,
+          "retrieved": 0
+        }
+      ]
+    },
+    "hybrid": {
+      "case_count": 40,
+      "labeled_cases": 28,
+      "recall_at_5": 0.9643,
+      "mrr": 0.9464,
+      "ndcg_at_5": 0.9297,
+      "outcomes": {
+        "answerable": {
+          "matched": 17,
+          "cases": 17
+        },
+        "multi-document": {
+          "matched": 5,
+          "cases": 7
+        },
+        "unanswerable": {
+          "matched": 6,
+          "cases": 6
+        },
+        "conflicting": {
+          "matched": 3,
+          "cases": 4
+        },
+        "injection": {
+          "matched": 6,
+          "cases": 6
+        }
+      },
+      "abstention_curve": [
+        {
+          "threshold": 0.0,
+          "coverage": 1.0,
+          "risk": 0.3,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.05,
+          "coverage": 0.925,
+          "risk": 0.243,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.925,
+          "risk": 0.243,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.15,
+          "coverage": 0.875,
+          "risk": 0.2,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.825,
+          "risk": 0.152,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.25,
+          "coverage": 0.825,
+          "risk": 0.152,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.8,
+          "risk": 0.125,
+          "wrong_abstention": 0.0
+        },
+        {
+          "threshold": 0.35,
+          "coverage": 0.65,
+          "risk": 0.0,
+          "wrong_abstention": 0.071
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.65,
+          "risk": 0.0,
+          "wrong_abstention": 0.071
+        },
+        {
+          "threshold": 0.45,
+          "coverage": 0.575,
+          "risk": 0.0,
+          "wrong_abstention": 0.179
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.575,
+          "risk": 0.0,
+          "wrong_abstention": 0.179
+        },
+        {
+          "threshold": 0.55,
+          "coverage": 0.45,
+          "risk": 0.0,
+          "wrong_abstention": 0.357
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 0.45,
+          "risk": 0.0,
+          "wrong_abstention": 0.357
+        },
+        {
+          "threshold": 0.65,
+          "coverage": 0.425,
+          "risk": 0.0,
+          "wrong_abstention": 0.393
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 0.275,
+          "risk": 0.0,
+          "wrong_abstention": 0.607
+        },
+        {
+          "threshold": 0.75,
+          "coverage": 0.275,
+          "risk": 0.0,
+          "wrong_abstention": 0.607
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 0.275,
+          "risk": 0.0,
+          "wrong_abstention": 0.607
+        },
+        {
+          "threshold": 0.85,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        },
+        {
+          "threshold": 0.95,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 0.2,
+          "risk": 0.0,
+          "wrong_abstention": 0.714
+        }
+      ],
+      "details": [
+        {
+          "id": "ka-001",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-002",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-004",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-005",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "ndcg": 0.6309
+        },
+        {
+          "id": "ka-007",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-008",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-010",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-011",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.8,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-013",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-014",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.8,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-016",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-017",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-019",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-020",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-022",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-023",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-025",
+          "category": "answerable",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 0.5,
+          "ndcg": 0.6309
+        },
+        {
+          "id": "ka-026",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 0.5,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.6131
+        },
+        {
+          "id": "ka-028",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.5,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-029",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.4,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.9197
+        },
+        {
+          "id": "ka-031",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 0.8503
+        },
+        {
+          "id": "ka-032",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.4,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-034",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-035",
+          "category": "multi-document",
+          "expected_outcome": "answer",
+          "outcome": "answer",
+          "top_coverage": 0.4,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-037",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.25,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-038",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.0,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-040",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-041",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-043",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.0,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-044",
+          "category": "unanswerable",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-046",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "conflict",
+          "top_coverage": 0.667,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-047",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "conflict",
+          "top_coverage": 1.0,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-049",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "conflict",
+          "top_coverage": 0.6,
+          "retrieved": 5,
+          "recall": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "id": "ka-050",
+          "category": "conflicting",
+          "expected_outcome": "conflict",
+          "outcome": "answer",
+          "top_coverage": 0.8,
+          "retrieved": 5,
+          "recall": 0.5,
+          "reciprocal_rank": 0.5,
+          "ndcg": 0.3869
+        },
+        {
+          "id": "ka-052",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.333,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-053",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.143,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-055",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.167,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-056",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.167,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-058",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.125,
+          "retrieved": 5
+        },
+        {
+          "id": "ka-059",
+          "category": "injection",
+          "expected_outcome": "abstain",
+          "outcome": "abstain",
+          "top_coverage": 0.0,
+          "retrieved": 5
+        }
+      ]
+    }
+  },
+  "keyword_vs_hybrid": {
+    "metric": "ndcg_at_5",
+    "mean_difference": -0.0222,
+    "p_value": 0.1898,
+    "test": "paired randomization, 10000 sign flips, seed 7"
+  }
+}

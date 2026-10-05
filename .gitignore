@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+node_modules/
+dist/
+.data/
+*.pyc
+.DS_Store
+coverage/
+playwright-report/
+test-results/
+.sites-runtime/
+*.tsbuildinfo
+
+# Secrets and local data (security kit)
+*.pem
+*.key
+*.p12
+*.sqlite
+*.db
+secrets/
