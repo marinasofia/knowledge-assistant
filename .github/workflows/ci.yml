@@ -1,6 +1,7 @@
 name: Verify
 on:
   push:
+    branches: [main]   # pull requests run through pull_request, so branch pushes would only duplicate them
   pull_request:
 permissions:
   contents: read
