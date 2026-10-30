@@ -2,9 +2,11 @@ import hashlib
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 from uuid import uuid4
 
 from fastapi import HTTPException
+from sqlalchemy.engine import Connection
 
 from .config import settings
 from .db import run, transaction
@@ -14,11 +16,11 @@ MAX_BYTES = 10 * 1024 * 1024
 MAX_CHARS = 500_000
 
 
-def new_id():
+def new_id() -> str:
     return str(uuid4())
 
 
-def validate_file(filename, data):
+def validate_file(filename: str, data: bytes) -> str:
     suffix = Path(filename).suffix.lower()
     if suffix not in {".txt", ".md"}:
         raise HTTPException(415, "text_or_markdown_required_pdf_not_enabled")
@@ -50,17 +52,17 @@ class Passage:
     text: str
 
     @property
-    def key(self):
+    def key(self) -> str:
         # Same section path and same words give the same key in every version.
         normalized = " ".join(self.text.split())
         return hashlib.sha256((self.section_path + "\n" + normalized).encode()).hexdigest()[:32]
 
 
-def split_passages(content):
+def split_passages(content: str) -> list[Passage]:
     """Split Markdown into paragraph passages that never break inside a sentence."""
-    headings = []
-    paragraphs = []
-    buffer = []
+    headings: list[tuple[int, str]] = []
+    paragraphs: list[Passage] = []
+    buffer: list[str] = []
 
     def flush():
         text = "\n".join(buffer).strip()
@@ -85,11 +87,12 @@ def split_passages(content):
     return paragraphs
 
 
-def pack(text):
+def pack(text: str) -> list[str]:
     """Greedily pack whole sentences into pieces of at most MAX_PASSAGE characters."""
     if len(text) <= MAX_PASSAGE:
         return [text]
-    pieces, current = [], ""
+    pieces: list[str] = []
+    current = ""
     for sentence in SENTENCE_END.split(text):
         while len(sentence) > MAX_PASSAGE:
             # A single sentence longer than the limit: cut at the last space that fits.
@@ -110,7 +113,7 @@ def pack(text):
     return pieces
 
 
-def object_path(key):
+def object_path(key: str) -> Path:
     # Keys are generated UUIDs, never paths or user filenames.
     from uuid import UUID
 
@@ -121,7 +124,14 @@ def object_path(key):
     return root / key
 
 
-def enqueue(conn, workspace, title, filename, data, document_id=None):
+def enqueue(
+    conn: Connection,
+    workspace: str,
+    title: str,
+    filename: str,
+    data: bytes,
+    document_id: str | None = None,
+) -> dict[str, str]:
     parse_front_matter(validate_file(filename, data))
     run(conn, "SELECT pg_advisory_xact_lock(hashtext(:w))", w=workspace)
     count = run(conn, "SELECT count(*) FROM documents WHERE NOT deleted").scalar()
@@ -173,7 +183,7 @@ def enqueue(conn, workspace, title, filename, data, document_id=None):
     return {"id": document_id, "version_id": version_id, "status": "queued"}
 
 
-def process_one(workspace):
+def process_one(workspace: str) -> bool:
     lease = new_id()
     with transaction(workspace) as conn:
         job = (
@@ -318,7 +328,7 @@ def process_one(workspace):
     return True
 
 
-def activate(conn, workspace, version_id, document_id):
+def activate(conn: Connection, workspace: str, version_id: str, document_id: str) -> None:
     run(conn, "UPDATE documents SET active_version=:v WHERE id=:d", v=version_id, d=document_id)
     # Imported here because reviews imports new_id from this module.
     from .reviews import outdate_for_document
@@ -326,7 +336,7 @@ def activate(conn, workspace, version_id, document_id):
     outdate_for_document(conn, workspace, document_id)
 
 
-def activate_due(workspace):
+def activate_due(workspace: str) -> int:
     """Activate scheduled versions whose effective date has arrived."""
     with transaction(workspace) as conn:
         due = run(
@@ -349,7 +359,7 @@ def activate_due(workspace):
     return len(due)
 
 
-def cleanup(workspace):
+def cleanup(workspace: str) -> None:
     with transaction(workspace) as conn:
         versions = run(
             conn,
@@ -368,7 +378,9 @@ def cleanup(workspace):
             )
 
 
-def diff_versions(conn, document_id, old_number, new_number):
+def diff_versions(
+    conn: Connection, document_id: str, old_number: int, new_number: int
+) -> dict[str, Any]:
     """Compare two versions section by section using passage content keys."""
 
     def passages(number):
@@ -385,7 +397,7 @@ def diff_versions(conn, document_id, old_number, new_number):
     if not old or not new:
         raise HTTPException(404, "version_not_found")
     sections = list(dict.fromkeys([p.section_path for p in new] + [p.section_path for p in old]))
-    changes = []
+    changes: list[dict[str, Any]] = []
     for path in sections:
         before = [p for p in old if p.section_path == path]
         after = [p for p in new if p.section_path == path]

@@ -44,7 +44,7 @@ Every transition is a compare-and-set: the client sends the `revision` it saw, a
 
 Answers cite passages only if they are active at answer time, and each citation stores the version ID, section, and quote as a snapshot. Cleanup deletes passages of deleted documents, so citations must not depend on `chunks` rows to stay readable. The version ID is what lets a later change mark a published answer as resting on superseded policy.
 
-Not yet built: published answers are not shown to future askers, and a superseded citation is displayed but does not reopen the review. Review requests still need a retention rule.
+Update, September 2026: `published_matches` in `backend/app/reviews.py` offers a published answer to a later asker when the published question shares at least 60 percent of the new question's search terms, and `outdate_for_document` moves an answered review to `outdated` when its quoted text is no longer in the document's active version, so the citation reopens the review instead of only being displayed as superseded. Review requests still need a retention rule.
 
 ## 008: Passages follow document structure and keep their identity
 
@@ -60,6 +60,6 @@ A conflict is two active documents giving different figures under the same secti
 
 ## 010: Two replaceable interfaces around fixed decision rules
 
-`generators.py` defines a relevance gate (does the evidence cover the question) and a generator (turn evidence into an answer). The coverage rule and evidence mode are one implementation each; Claude is a second generator, and a Jev relevance gate would be a second gate, selected by configuration and compared on the same evaluation cases. The decision order stays in `answers.generate`: no evidence, not covered, unresolved conflict, then the generator. Adapters cannot skip a step, so a new model can change wording but not whether the system abstains or reports a conflict. The gate runs in every mode, so an uncovered question never becomes a paid call.
+`generators.py` defines a relevance gate (does the evidence cover the question) and a generator (turn evidence into an answer). The coverage rule and evidence mode are one implementation each; Claude is a second generator, and a judge based relevance gate would be a second gate, selected by configuration and compared on the same evaluation cases. The decision order stays in `answers.generate`: no evidence, not covered, unresolved conflict, then the generator. Adapters cannot skip a step, so a new model can change wording but not whether the system abstains or reports a conflict. The gate runs in every mode, so an uncovered question never becomes a paid call.
 
 In Claude mode an answer is a list of claims, each citing at least one exact quote, and every quote must support some claim. This is structural attribution: it proves each sentence points at real approved text, not that the text entails the sentence (Rashkin et al., 2023, separate these). Entailment still needs human review or a separately measured judge.

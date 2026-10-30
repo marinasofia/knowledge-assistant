@@ -1,6 +1,13 @@
 # Release evidence
 
-## Verified locally
+## Current (October 2026)
+
+- 85 pytest checks are collected (`cd backend && uv run pytest --collect-only -q`), and 8 Playwright workflows live in `frontend/tests/workspace.spec.ts` and `frontend/tests/workflows.spec.ts`.
+- Alembic has 10 migrations, through revision 010 (`backend/migrations/versions/`).
+- Retrieval on the labeled cases (`evaluations/development-report.json`, `evaluations/held-out-report.json`): keyword recall@5 is 0.964 on the 28 labeled development cases and 0.917 on the 12 labeled held-out cases; hybrid is 0.964 and 1.000. The paired randomization test on nDCG@5 gives p = 0.19 and p = 0.25, so keyword stays the default. Labels are still written by the author and not independently reviewed.
+- Dependency audits moved from the Verify workflow to the Security workflow, which runs on pushes to main and weekly.
+
+## Verified at the first release slice (September 2026)
 
 - 23 pytest checks passed, including real PostgreSQL RLS under a non-owner runtime role, pool context isolation, actual second-workspace source/conversation/document/review/feedback denial, revoked membership, CSRF, member restrictions, citation rejection, atomic versions, deletion, three-attempt retries, concurrent daily caps, and a five-slot global lease limit.
 - Four Playwright workflows passed: member questions and source viewing, explicit review submission, administrator upload/replacement/deletion, narrow layout navigation, and keyboard abstention. Desktop and mobile screenshots were inspected.

@@ -11,6 +11,7 @@ DEVELOPMENT_DATABASE = "knowledge"
 def pytest_configure(config):
     # Tests write fixtures. Never let a missing environment point them at the dev database.
     targets = {make_url(settings.database_url).database, make_url(settings.migration_url).database}
+    # CI runs against a throwaway Postgres service container, so its database name is fine there.
     allowed = os.environ.get("CI") or os.environ.get("KA_ALLOW_DEV_DATABASE_TESTS")
     if DEVELOPMENT_DATABASE in targets and not allowed:
         pytest.exit(

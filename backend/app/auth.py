@@ -2,7 +2,8 @@ import hashlib
 import secrets
 from dataclasses import dataclass
 
-from fastapi import HTTPException, Request
+from fastapi import HTTPException, Request, Response
+from sqlalchemy.engine import RowMapping
 
 from .config import settings
 from .db import run, transaction
@@ -11,7 +12,7 @@ from .db import run, transaction
 IDLE_MINUTES = 30
 
 
-def digest(token):
+def digest(token: str) -> str:
     return hashlib.sha256(token.encode()).hexdigest()
 
 
@@ -24,7 +25,7 @@ class Identity:
     csrf: str
 
 
-def session_user(request: Request):
+def session_user(request: Request) -> RowMapping:
     token = request.cookies.get("ka_session", "")
     with transaction() as conn:
         row = (
@@ -52,7 +53,7 @@ def session_user(request: Request):
     return row
 
 
-def identity(request: Request):
+def identity(request: Request) -> Identity:
     user = session_user(request)
     workspace = request.headers.get("X-Workspace-ID")
     with transaction() as conn:
@@ -81,17 +82,17 @@ def identity(request: Request):
     return Identity(user["id"], user["name"], workspace, membership, user["csrf"])
 
 
-def check_origin(request):
+def check_origin(request: Request) -> None:
     if request.headers.get("origin") != settings.origin:
         raise HTTPException(403, "origin_not_allowed")
 
 
-def admin(who):
+def admin(who: Identity) -> None:
     if who.role != "admin":
         raise HTTPException(403, "admin_required")
 
 
-def create_session(response, user_id):
+def create_session(response: Response, user_id: str) -> str:
     token, csrf = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
     with transaction() as conn:
         run(

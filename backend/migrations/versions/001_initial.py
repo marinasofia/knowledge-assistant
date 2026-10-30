@@ -9,6 +9,7 @@ down_revision = None
 def upgrade():
     op.execute("""
     CREATE EXTENSION IF NOT EXISTS vector;
+    -- Local development password only. Change it before any shared deployment (see README).
     DO $$ BEGIN
       IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname='knowledge_app') THEN
         CREATE ROLE knowledge_app LOGIN PASSWORD 'local-runtime-only' NOSUPERUSER NOBYPASSRLS;

@@ -19,7 +19,7 @@ for name in filter(None,paths):
         if re.search(pattern,text):
             failures.append(name+': credential pattern')
     if path.suffix not in {'.lock','.json'} and any(c in text for c in ['\u2013','\u2014']):
-        failures.append(name+': prohibited punctuation')
+        failures.append(name+': non ASCII dash, house style')
 if failures:
     raise SystemExit('\n'.join(failures))
 print('Tracked-file hygiene checks passed.')

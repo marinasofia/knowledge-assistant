@@ -1,6 +1,6 @@
-# Security rules for agents
+# Security rules
 
-Every agent working in this repository follows these rules. They apply to code, docs, tests, fixtures, notebooks, and commit messages.
+Everyone working in this repository follows these rules. They apply to code, docs, tests, fixtures, notebooks, and commit messages.
 
 ## Secrets
 
@@ -8,7 +8,7 @@ Every agent working in this repository follows these rules. They apply to code, 
 2. `.env` files stay local and are ignored by git. Only `.env.example` is committed, and it holds placeholders such as `ANTHROPIC_API_KEY=your-key-here`.
 3. Never print a secret in logs, error messages, test output, or a README example.
 4. If a secret was ever committed, treat it as leaked: tell the user to rotate it first. Rewriting history comes second and does not make the key safe again.
-5. Supabase: the anon key may appear in client code only when row level security is on for every table. The service role key never leaves the server.
+5. The runtime Postgres role never owns tables and never has BYPASSRLS.
 
 ## Data
 

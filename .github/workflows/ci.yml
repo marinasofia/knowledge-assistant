@@ -50,10 +50,6 @@ jobs:
           npm ci
           npm run build
           npm run format:check
-          npm audit --audit-level=high
-      - name: Dependency audit
-        working-directory: backend
-        run: uv run pip-audit
       - name: Repository hygiene
         run: python scripts/check_repository.py
       - name: Browser workflow checks
@@ -73,3 +69,15 @@ jobs:
           trap 'kill "$api_pid" "$worker_pid" "$ui_pid" 2>/dev/null || true; wait || true' EXIT
           npx playwright install --with-deps chromium
           npm test
+      - name: Upload server logs and browser report
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: verify-failure-logs
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            /tmp/knowledge-api.log
+            /tmp/knowledge-worker.log
+            /tmp/knowledge-ui.log
+            frontend/playwright-report

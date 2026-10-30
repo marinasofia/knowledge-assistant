@@ -1,9 +1,13 @@
 """Human review as an explicit state machine with optimistic concurrency."""
 
 import json
+from collections.abc import Iterable
+from typing import Any
 
 from fastapi import HTTPException
+from sqlalchemy.engine import Connection, Row
 
+from .auth import Identity
 from .db import run
 from .ingestion import new_id
 
@@ -20,7 +24,9 @@ TRANSITIONS = {
 }
 
 
-def create(conn, who, question, note, message_id=None):
+def create(
+    conn: Connection, who: Identity, question: str, note: str, message_id: str | None = None
+) -> str:
     if (
         message_id
         and not run(
@@ -49,7 +55,15 @@ def create(conn, who, question, note, message_id=None):
     return key
 
 
-def record(conn, workspace, review_id, action, actor, resolution=None, citations=()):
+def record(
+    conn: Connection,
+    workspace: str,
+    review_id: str,
+    action: str,
+    actor: str | None,
+    resolution: str | None = None,
+    citations: Iterable[dict[str, Any]] = (),
+) -> None:
     # Append-only: the runtime role may insert and read events, never change them.
     run(
         conn,
@@ -66,8 +80,15 @@ def record(conn, workspace, review_id, action, actor, resolution=None, citations
 
 
 def transition(
-    conn, who, review_id, action, revision, resolution=None, source_ids=(), publish=False
-):
+    conn: Connection,
+    who: Identity,
+    review_id: str,
+    action: str,
+    revision: int,
+    resolution: str | None = None,
+    source_ids: Iterable[str] = (),
+    publish: bool = False,
+) -> dict[str, Any]:
     if who.role != "admin":
         raise HTTPException(403, "admin_required")
     starts, target = TRANSITIONS[action]
@@ -132,7 +153,7 @@ def transition(
     return {"status": target, "revision": updated.revision}
 
 
-def outdate_for_document(conn, workspace, document_id):
+def outdate_for_document(conn: Connection, workspace: str, document_id: str) -> list[str]:
     """Reopen answers whose quoted text is no longer in the document's active version."""
     reopened = run(
         conn,
@@ -153,7 +174,7 @@ def outdate_for_document(conn, workspace, document_id):
     return ids
 
 
-def citations_for(conn, review_id):
+def citations_for(conn: Connection, review_id: str) -> list[dict[str, Any]]:
     return [
         dict(c)
         for c in run(
@@ -170,7 +191,7 @@ def citations_for(conn, review_id):
     ]
 
 
-def published_matches(conn, question, limit=2):
+def published_matches(conn: Connection, question: str, limit: int = 2) -> list[dict[str, Any]]:
     """Published answers whose original question shares most of this question's terms."""
     matches = [
         dict(r)
@@ -195,7 +216,7 @@ def published_matches(conn, question, limit=2):
     return matches
 
 
-def active_passage(conn, source_id):
+def active_passage(conn: Connection, source_id: str) -> Row[Any]:
     passage = run(
         conn,
         """SELECT c.id,c.version_id,c.section,c.content FROM chunks c JOIN document_versions v
@@ -209,7 +230,7 @@ def active_passage(conn, source_id):
     return passage
 
 
-def listing(conn, who, offset):
+def listing(conn: Connection, who: Identity, offset: int) -> list[dict[str, Any]]:
     reviews = [
         dict(r)
         for r in run(
