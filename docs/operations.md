@@ -6,6 +6,8 @@ Install Docker, Node 22, Python 3.12, and uv 0.12.3. From the repository root, r
 
 Manual commands are listed in README.md. Docker Compose is an alternative database launcher; do not start both launchers on the same port. Health routes: `/api/health/live` and `/api/health/ready`. Interactive typed API documentation: `/docs` on the backend port.
 
+The backend image builds with `docker build -t knowledge-assistant backend` (`backend/Dockerfile`, with `backend/.dockerignore` keeping local files out of the context). It is not used by `scripts/dev.sh`, which runs the API and worker from the virtual environment.
+
 ## Optional semantic retrieval
 
 From backend, run `uv sync --frozen --extra semantic`, then `uv run --extra semantic python -m app.reindex`. This downloads the pinned Apache-2.0 MiniLM model and embeds the approved fictional corpus. Set `KA_SEMANTIC_SEARCH=true` for both API and worker. Every new document version records its embedding model revision. Retrieval uses exact pgvector distance and reciprocal rank fusion with the keyword baseline. No approximate index exists. Never mix incompatible vector models.
