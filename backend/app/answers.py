@@ -1,6 +1,11 @@
+from collections.abc import Iterable
+from typing import Any
+
 from fastapi import HTTPException
+from sqlalchemy.engine import Connection
 
 from .answer_schema import Answer, Reference, validate_answer
+from .auth import Identity
 from .config import settings
 from .db import run, transaction
 from .generators import MIN_COVERAGE, cite, gate, generator
@@ -14,7 +19,7 @@ COVERAGE = """(SELECT count(*) FROM unnest(tsvector_to_array(to_tsvector('englis
   / greatest(cardinality(tsvector_to_array(to_tsvector('english',:q))),1) AS coverage"""
 
 
-def retrieve(conn, question):
+def retrieve(conn: Connection, question: str) -> list[dict[str, Any]]:
     results = [
         dict(row)
         for row in run(
@@ -55,7 +60,7 @@ def retrieve(conn, question):
             ).mappings()
         ]
         results = fuse_ranks(results, semantic)
-    bounded = []
+    bounded: list[dict[str, Any]] = []
     evidence_bytes = 0
     for item in results:
         size = len(item["content"].encode("utf-8"))
@@ -65,7 +70,7 @@ def retrieve(conn, question):
     return bounded
 
 
-def admit(who):
+def admit(who: Identity) -> None:
     # The kill switch covers every mode; the paid quota only covers provider calls.
     if not settings.generation_enabled:
         raise HTTPException(503, "generation_disabled")
@@ -73,7 +78,7 @@ def admit(who):
         reserve_usage(who)
 
 
-def reserve_usage(who):
+def reserve_usage(who: Identity) -> None:
     # Lock buckets in a stable order. Committed reservations are never refunded on failure.
     buckets = [
         ("global", settings.daily_limit),
@@ -108,7 +113,9 @@ def reserve_usage(who):
             )
 
 
-def generate(question, evidence, conflicts=()):
+def generate(
+    question: str, evidence: list[dict[str, Any]], conflicts: Iterable[dict[str, Any]] = ()
+) -> Answer:
     """Decide the outcome in a fixed order: no evidence, not covered, conflict, then answer."""
     if not evidence:
         return Answer(
