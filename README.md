@@ -7,13 +7,20 @@ A workspace where a team asks questions about its own policies and gets back the
 
 ![Three questions: one answered with the exact cited passage, one where two policies conflict and both are shown, and one with no source, so it abstains](docs/demo.gif)
 
+<p>
+  <img src="docs/screenshots/workspace.png" alt="Member workspace on a desktop screen: a question, its answer and the cited passage with its source" width="80%">
+  <img src="docs/screenshots/mobile-documents.png" alt="Administrator document list on a phone screen" width="17%">
+</p>
+
 ## Why I built it
 
 Most document chatbots answer every question, even when nothing in the documents supports the answer. In an operations team, a confident wrong answer about leave, expenses or security is worse than no answer. I wanted a tool that treats the approved documents as the only source of truth: it quotes them word for word, flags it when two policies disagree, and refuses instead of guessing.
 
+Built privately over August to September 2026 and published as one commit; [docs/architecture.md](docs/architecture.md) records the design decisions in the order they were made.
+
 ## Quickstart
 
-You need Docker, Node 22, Python 3.12 and [uv](https://docs.astral.sh/uv/). No API key.
+You need Docker, Node 22, Python 3.12 and [uv](https://docs.astral.sh/uv/) 0.12.3 or later. No API key.
 
 ```sh
 git clone https://github.com/marinasofia/knowledge-assistant.git
@@ -54,7 +61,7 @@ Documents go in through a separate worker that leases ingestion jobs, retries up
 
 ## Evaluation
 
-60 labeled cases in `evaluations/cases.json` cover answerable, multi document, unanswerable, conflicting and prompt injection questions, split 40 for development and 20 held out. Retrieval is scored over the top five passages.
+60 cases in `evaluations/cases.json` (40 development, 20 held out) cover answerable, multi document, unanswerable, conflicting and prompt injection questions. Retrieval metrics use the 40 cases that have an expected passage; the other 20 only score the answer or abstain decision. I wrote the labels myself and they have not been independently reviewed. Retrieval is scored over the top five passages.
 
 | Split | Mode | Recall@5 | MRR | nDCG@5 |
 |---|---|---|---|---|
@@ -68,8 +75,12 @@ Answer or abstain decisions with keyword retrieval, across both splits:
 | Case type | Correct |
 |---|---|
 | Answerable questions answered | 25 of 25 |
+| Multi document questions answered | 8 of 10 |
 | Unanswerable questions refused | 10 of 10 |
 | Prompt injection attempts refused | 9 of 10 |
+| Policy conflicts flagged | 3 of 5 |
+
+Conflicts are the weak spot: the rule only fires when two documents disagree under the same section title.
 
 The 0.4 coverage threshold for abstaining comes from the development abstention curve. From 0.35 up, no question that should be refused gets answered, and wrongly refused answerable questions hold at 7% through 0.40 before climbing to 18% at 0.45, so 0.4 sits at that knee. Reports are deterministic, so a fresh database reproduces them byte for byte. Method, metrics and the full abstention curves are in [evaluations/README.md](evaluations/README.md).
 
@@ -91,11 +102,17 @@ A load smoke test of 20 questions at 5 concurrent requests against real PostgreS
 
 More in [docs/architecture.md](docs/architecture.md) and the [threat model](docs/threat-model.md).
 
+## What I learned
+
+* Hybrid retrieval did not beat keyword search on 40 labeled questions: a paired randomization test on nDCG@5 gave p = 0.19 on the development split and p = 0.25 held out ([evaluations/README.md](evaluations/README.md)). The simpler default stayed.
+* Row level security is only a second lock if the application role cannot bypass it. The readiness check reads `pg_roles` and refuses to start under a superuser or `BYPASSRLS` role.
+* Structural citation checks prove that a quote exists in an approved document, not that it supports the claim. That still needs human review.
+
 ## Tests
 
-85 backend tests (pytest) and 8 browser workflow tests (Playwright). CI runs them on every push against a fresh PostgreSQL with pgvector, along with ruff, a frontend build, `npm audit`, `pip-audit` and a repository hygiene check.
+85 backend tests (pytest) and 8 browser workflow tests (Playwright). CI runs them on every pull request and on every push to main against a fresh PostgreSQL with pgvector, along with ruff, a frontend build and a repository hygiene check. Dependency audits (`pip-audit`, `npm audit`) run in a separate Security workflow on pushes to main and weekly.
 
-Tests write fixtures, so point them at a disposable database:
+Tests write fixtures, so point them at a disposable database. The migration creates the `knowledge_app` role with a local only password; change it before any shared deployment.
 
 ```sh
 docker exec knowledge-assistant-db createdb -U knowledge_owner knowledge_test
