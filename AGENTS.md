@@ -12,7 +12,3 @@ Use plain punctuation, never em or en dashes. Keep changes small and test behavi
 ## Trust boundaries
 
 Never commit credentials, environment files, personal documents, local database contents, or machine-specific paths. Fictional fixtures only. Runtime database credentials must not own tables or bypass row security. Every source and workspace route must enforce access independently. Never allow model output to perform writes. Do not bypass a release gate.
-
-## Security
-
-Follow [SECURITY-RULES.md](SECURITY-RULES.md) for every change. Before this repo goes public, run the security kit scan and its publish checklist.
